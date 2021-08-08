@@ -1,0 +1,35 @@
+services:
+  api:
+    build: ./api
+    ports:
+      - "8080:80"
+    volumes:
+      - "./api/src/:/var/www/html/"
+    networks:
+      - backend
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - backend
+  composer:
+    image: composer:2
+    volumes:
+      - "./api/src/:/app"
+  artisan:
+    build: ./api
+    volumes:
+      - "./api/src/:/var/www/html/"
+    entrypoint: ['/var/www/html/artisan']
+volumes:
+  db-data:
+networks:
+  backend:
