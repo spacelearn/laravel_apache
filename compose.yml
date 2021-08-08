@@ -29,6 +29,8 @@ services:
     volumes:
       - "./api/src/:/var/www/html/"
     entrypoint: ['/var/www/html/artisan']
+    networks:
+      - backend
 volumes:
   db-data:
 networks:
