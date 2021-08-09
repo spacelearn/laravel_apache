@@ -24,6 +24,7 @@ services:
     image: composer:2
     volumes:
       - "./api/src/:/app"
+    profiles: ["tool"]
   artisan:
     build: ./api
     volumes:
@@ -31,6 +32,7 @@ services:
     entrypoint: ['/var/www/html/artisan']
     networks:
       - backend
+    profiles: ["tool"]
 volumes:
   db-data:
 networks:
